@@ -73,7 +73,7 @@ app.get("/login", async function (req, res, next) {
             message: "Ok",
             response: {
               alumno: nombreAlumno,
-              endpoints: opciones,
+              rutas: opciones,
             },
           });
         } else {

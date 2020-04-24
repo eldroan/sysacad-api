@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "basic-auth": "^2.0.1",
+    "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "node": "^14.0.0"
+    "node": "^14.0.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

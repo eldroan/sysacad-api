@@ -34,10 +34,6 @@ app.get("/hello", function (req, res, next) {
 app.get("/login", async function (req, res, next) {
   const { name: legajo, pass: password } = auth(req);
   if (legajo && password) {
-    const params = new URLSearchParams();
-    params.append("collection", "yes");
-    params.append("legajo", legajo);
-    params.append("password", password);
 
     try {
       const html = await rp.post(
@@ -106,6 +102,6 @@ app.get("/login", async function (req, res, next) {
   }
 });
 
-app.listen(80, function () {
-  console.log("CORS-enabled web server listening on port 80");
+app.listen(process.env.PORT || 3000, function () {
+  console.log("CORS-enabled web server listening");
 });

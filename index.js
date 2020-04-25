@@ -5,6 +5,7 @@ var auth = require("basic-auth");
 var rp = require("request-promise");
 var cheerio = require("cheerio");
 var moment = require("moment");
+var iconv = require("iconv-lite");
 
 // --------- MIDDLEWARES --------- //
 app.use(cors());
@@ -62,6 +63,7 @@ async function getCookie(req) {
             password: password,
           },
           resolveWithFullResponse: true,
+          encoding: null,
         }
       );
 
@@ -72,8 +74,8 @@ async function getCookie(req) {
         if (error.length == 0) {
           //Login exitoso
           const cookie = response.headers["set-cookie"];
-
-          return { cookie: cookie, body: response.body, error: false };
+          const decoded = iconv.decode(response.body, "ISO-8859-1");
+          return { cookie: cookie, body: decoded, error: false };
         } else {
           return {
             status: 401,
@@ -251,14 +253,17 @@ app.get("/examenes", async function (req, res) {
       try {
         const id = alumno.id; //https://sysacad.frsf.utn.edu.ar/SysAcad/examenes.asp?id=
         const cookie = result.cookie;
-        const html = await rp.get(
+        const response = await rp.get(
           `https://sysacad.frsf.utn.edu.ar/SysAcad/examenes.asp?id=${id.toString()}`,
           {
             headers: {
               Cookie: cookie,
             },
+            encoding: null,
+            resolveWithFullResponse: true,
           }
         );
+        const html = iconv.decode(response.body, "ISO-8859-1"); //Encoding del sysacad
         const $ = cheerio.load(html);
         const rows = $(".textoTabla");
 

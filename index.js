@@ -55,7 +55,7 @@ async function getCookie(req) {
   if (legajo && password) {
     try {
       const response = await rp.post(
-        "http://sysacad.frsf.utn.edu.ar/SysAcad/menuAlumno.asp",
+        "https://sysacad.frsf.utn.edu.ar/SysAcad/menuAlumno.asp",
         {
           form: {
             collection: "yes",
@@ -64,6 +64,9 @@ async function getCookie(req) {
           },
           resolveWithFullResponse: true,
           encoding: null,
+          strictSSL: false,
+          rejectUnauthorized: false,
+          insecure: true
         }
       );
 
